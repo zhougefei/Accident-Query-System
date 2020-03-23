@@ -1,0 +1,26 @@
+<%- include("partials/header") %>
+
+<header class="jumbotron">
+    <div class="container">
+        <h1 style="font-size: 55px"><i class="fas fa-car-crash"></i> Welcome to Accident Query System</h1>
+        <p>Don't learn safety from accident, but from out website</p>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+		<h1 style="text-align: center; margin: 50px auto;">Query Service</h1>
+		<div style="width: 50%; margin: 20px auto; margin-top: 50px">
+        	<div class="form-group" id="query-index">
+				<a class="btn btn-lg btn-primary btn-block" href="queries/trends"><h2>Trends Analysis</h2></a>
+			</div>
+        	<div class="form-group" id="query-index">
+				<a class="btn btn-lg btn-primary btn-block" href="queries/statistics"><h2>Statistics Analysis</h2></a>
+			</div>
+        	<div class="form-group" id="query-index">
+				<a class="btn btn-lg btn-primary btn-block" href="queries/maps"><h2>Show Accidents on the Map</h2></a>
+			</div>
+		</div>
+    </div>
+</div>
+<%- include("partials/footer") %>

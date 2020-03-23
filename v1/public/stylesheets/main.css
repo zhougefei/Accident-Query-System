@@ -1,0 +1,88 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+.img-thumbnail img {
+	width: 100%;
+}
+.img-thumbnail {
+	padding: 0;
+}
+
+.img-thumbnail .caption-full {
+	padding: 9px;	
+}
+
+/* Google Maps */
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+.container .text-muted {
+  margin: 20px 0;
+}
+
+/* Campground show page delete button */
+.delete-form {
+	display: inline-block;
+}
+
+/* Flexbox grid fix */
+.flex-wrap {
+  display:flex;
+  flex-wrap: wrap;
+}
+
+#search-container {
+  text-align: center;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#textheight {
+  height: 100px;
+}
+
+#profile {
+	width: 90%;
+    border: 1px solid #F0F0F0;
+    padding: 10px;
+    margin: 0 auto;
+    max-width: 1000px;
+	height: 100%;
+}
+
+#profile-title {
+	text-transform: capitalize;
+	text-align: center;
+}
+
+#usercampground {
+	font-size: 20px;
+	color: gray;
+}
+
+.checked {
+    color: orange;
+}
+
+#query-index {
+	height: 120px;
+}

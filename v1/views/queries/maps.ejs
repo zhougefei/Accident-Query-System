@@ -1,0 +1,38 @@
+<%- include("../partials/header") %>
+
+<div class="row">
+    <h1 style="text-align: center">Accident Density</h1>
+	<div id="map"></div>
+</div>
+
+
+
+
+
+<script>
+  function initMap() {
+    var lat = 39.07622;
+    var lng = -103.60283;
+    var center = {lat: lat, lng: lng };
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4.1,
+        center: center,
+        scrollwheel: false
+    });
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: center,
+        map: map
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=your-api-key&callback=initMap"></script>
+
+<a href="/">Go Back</a>
+
+<%- include("../partials/footer") %>
