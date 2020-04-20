@@ -1,0 +1,106 @@
+<%- include("../../partials/header") %>
+
+<h1 style="text-align: center">Trend of accident numbers in the selected city</h1>
+
+<div class="row">
+    <div class="col-md-3">
+         <p class="lead" style="text-align: center"> </p>
+         <div class="list-group">
+             <a class="list-group-item active" href="/queries/trends/accident_in_state">Trend of accident numbers in the selected city</a>
+             <a class="list-group-item" href="/queries/trends/trend_of_more_than2">Trend of occurrence of high severity more than 2 at the selected city</a>
+             <a class="list-group-item active" href="/queries/trends/trend_of_weather">The trend of accident occurrence in selected city under special weather condition with different severity level</a>
+    	 </div>
+    	 <p>
+              <a href="/queries/trends" class="btn btn-primary btn-block">Go Back</a>
+         </p>
+    </div>
+    <div class="container col-md-9" style="text-align: center; width: 30%; margin: 50px 50px">
+             <div class="chart-container" style="position: relative; height:50vh; width:50vw">
+               <canvas id="myChart"></canvas>
+             </div>
+             <script>
+               //convert 24 to 12 format time
+               function tConv24(time24) {
+                 var ts = time24;
+                 var H = +ts.substr(0, 2);
+                 var h = (H % 12) || 12;
+                 h = (h < 10)?("0"+h):h;  // leading 0 at the left for 1 digit hours
+                 var ampm = H < 12 ? " AM" : " PM";
+                 ts = h + ts.substr(2, 3) + ampm;
+                 return ts;
+               };
+               //generate random number for rgb value
+               var randomScalingFactor = function() { return Math.round(Math.random() * 300); };
+               var ctx = document.getElementById('myChart').getContext('2d');
+               var dataLength = <%-hours.length%>;
+               var backgroundCol = [];
+               var borderCol = [];
+               for (var i = 0; i < dataLength; i++) {
+                   var red = randomScalingFactor();
+                   var green = randomScalingFactor();
+                   var blue = randomScalingFactor();
+                   backgroundCol.push('rgba('+ red + ','+ green + ',' + blue + ','+ '0.5)');
+                   borderCol.push('rgba('+ red + ','+ green + ',' + blue + ','+ '0.3)');
+               };
+               var time = <%- JSON.stringify(hours) %>;
+               for(var i = 0; i < time.length; i++){
+                 time[i] = tConv24(time[i]);
+               };
+               var myChart = new Chart(ctx, {
+                 type: 'line',
+                 data: {
+                   labels: time,
+                   datasets: [{
+                     label: '# of accidents',
+                     data: [<%= hour_accident %>],
+                     fill: false,
+                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: "#e755ba",
+                    pointBackgroundColor: "#55bae7",
+                    pointBorderColor: "#55bae7",
+                    pointHoverBackgroundColor: "#55bae7",
+                    pointHoverBorderColor: "#55bae7",
+                    //borderColor: borderCol,
+                    borderWidth: 2
+                   }]
+                 },
+                 options: {responsive:true,
+                   title: {
+                     display : true,
+                     fontSize: 12,
+                     text: 'The trend of the number of traffic accidents happened every hour in selected city in 2019'
+                   },
+                   scales: {
+                     xAxes: [{
+                       display: true,
+                       scaleLabel: {
+                         fontSize: 15,
+                         display: true,
+                         labelString: 'time'
+                       },
+                      ticks: {
+                        fontSize: 12,
+                        beginAtZero: true
+                      }
+                     }],
+                     yAxes: [{
+                       display:true,
+                       scaleLabel:{
+                         fontSize: 15,
+                         display: true,
+                         labelString: "Number of Accidents"
+                       },
+                       ticks: {
+                         fontSize: 12,
+                         beginAtZero: true
+                       }
+                     }]
+                   }
+                 }
+               });
+
+             </script>
+    </div>
+</div>
+
+<%- include("../../partials/footer") %>

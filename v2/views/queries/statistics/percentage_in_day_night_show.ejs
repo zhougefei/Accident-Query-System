@@ -1,0 +1,53 @@
+<%- include("../../partials/header") %>
+
+<h1 style="text-align: center">Percentage of accidents under different severity level in selected state</h1>
+
+<div class="row">
+    <div class="col-md-3">
+         <div class="list-group">
+             <a class="list-group-item active" href="/queries/statistics/top_10_states">The top 10 states with the high accident occurrence</a>
+             <a class="list-group-item" href="/queries/statistics/percentage_of_accident">Total/Percentage of accidents under different severity level in selected state</a>
+             <a class="list-group-item active" href="/queries/statistics/effect_of_visibility ">Effect of visibility on the occurrence of accidents in the selected state</a>
+             <a class="list-group-item" href="/queries/statistics/average_visibility">Average visibility of different severity in selected state</a>
+             <a class="list-group-item active" href="/queries/statistics/percentage_in_day_night">Percentage of accidents in day/night in selected state</a>
+    	 </div>
+    	 <p>
+              <a href="/queries/statistics" class="btn btn-primary btn-block">Go Back</a>
+         </p>
+    </div>
+
+    <div class="container col-md-12" style="text-align: center; width: 30%; margin: 50px 50px">
+         <div class="chart-container" style="float:left; height:20vh; width:50vw; margin-bottom: 400px;">
+             <canvas id="myChart"></canvas>
+         </div>
+         <script>
+             var config = {
+                 type: 'pie',
+                 data: {
+                     datasets: [{
+                         data: [<%-day_night%>],
+                         backgroundColor: ['rgba(255,0,0,0.6)',
+                             'rgba(0,0,255,0.6)'],
+
+                         borderColor: ['rgba(255,0,0,0.87)',
+                             'rgba(0,0,255,0.87)']
+                     }],
+                     labels: ['Day', 'Night']
+                 },
+                 options: {
+                     responsive: true,
+                     title: {
+                         display: true,
+                     }
+                 }
+             };
+
+             window.onload = function() {
+                 var ctx = document.getElementById('myChart').getContext('2d');
+                 window.myPie = new Chart(ctx, config);
+             };
+         </script>
+    </div>
+</div>
+
+<%- include("../../partials/footer") %>

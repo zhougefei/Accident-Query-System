@@ -1,0 +1,91 @@
+<%- include("../../partials/header") %>
+
+<h1 style="text-align: center">The top 10 states with the high accident occurrence in 2019</h1>
+
+<div class="row">
+    <div class="col-md-3">
+         <div class="list-group">
+             <a class="list-group-item active" href="/queries/statistics/top_10_states">The top 10 states with the high accident occurrence</a>
+             <a class="list-group-item" href="/queries/statistics/percentage_of_accident">Total/Percentage of accidents under different severity level in selected city and state</a>
+             <a class="list-group-item active" href="/queries/statistics/effect_of_visibility ">Effect of visibility on the occurrence of accidents in the selected city and state</a>
+             <a class="list-group-item" href="/queries/statistics/average_visibility">Average visibility of different severity in selected city and state</a>
+             <a class="list-group-item active" href="/queries/statistics/percentage_in_day_night">Percentage of accidents in day/night in selected city and state</a>
+    	 </div>
+    	 <p>
+              <a href="/queries/statistics" class="btn btn-primary btn-block">Go Back</a>
+         </p>
+    </div>
+
+    <div class="container col-md-9" style="text-align: center; width: 30%; margin: 50px 50px">
+         <div class="chart-container" style="position: relative; height:50vh; width:50vw">
+              <canvas id="myChart"></canvas>
+         </div>
+         <script>
+              //generate random number for rgb value
+              var randomScalingFactor = function() { return Math.round(Math.random() * 255) };
+              var ctx = document.getElementById('myChart').getContext('2d');
+              var dataLength = <%-state.length%>;
+              var backgroundCol = [];
+              var borderCol = [];
+              for (var i = 0; i < dataLength; i++) {
+                  var red = randomScalingFactor();
+                  var green = randomScalingFactor();
+                  var blue = randomScalingFactor();
+                  backgroundCol.push('rgba('+ red + ','+ green + ',' + blue + ','+ '0.67)');
+                  borderCol.push('rgba('+ red + ','+ green + ',' + blue + ','+ '0.8)');
+              };
+              var state = <%- JSON.stringify(state) %>;
+              var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: state,
+          datasets: [{
+            label: '# of accidents',
+            data: [<%= number %>],
+            backgroundColor: backgroundCol,
+            borderColor: borderCol,
+            borderWidth: 2
+          }]
+        },
+        options: {responsive:true,
+          title: {
+            display : true,
+            fontSize: 12,
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              scaleLabel: {
+                fontSize: 15,
+                display: true,
+                labelString: 'State'
+              },
+              ticks: {
+                fontSize: 12,
+                major: {
+                  fontStyle: 'bold',
+                  fontColor: 'rgba(255,0,0,0.87)'
+                }
+              }
+            }],
+            yAxes: [{
+              display:true,
+              scaleLabel:{
+                display: true,
+                fontSize: 15,
+                labelString: "Number of Accidents"
+              },
+              ticks: {
+                fontSize: 12,
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+    </script>
+
+    </div>
+</div>
+
+<%- include("../../partials/footer") %>

@@ -1,0 +1,139 @@
+<%- include("../../partials/header") %>
+
+<h1 style="text-align: center">Total/Percentage of accidents under different severity level in selected state</h1>
+
+<div class="row">
+    <div class="col-md-3">
+         <div class="list-group">
+             <a class="list-group-item active" href="/queries/statistics/top_10_states">The top 10 states with the high accident occurrence</a>
+             <a class="list-group-item" href="/queries/statistics/percentage_of_accident">Total/Percentage of accidents under different severity level in selected state</a>
+             <a class="list-group-item active" href="/queries/statistics/effect_of_visibility ">Effect of visibility on the occurrence of accidents in the selected state</a>
+             <a class="list-group-item" href="/queries/statistics/average_visibility">Average visibility of different severity in selected state</a>
+             <a class="list-group-item active" href="/queries/statistics/percentage_in_day_night">Percentage of accidents in day/night in selected state</a>
+    	 </div>
+    	 <p>
+              <a href="/queries/statistics" class="btn btn-primary btn-block">Go Back</a>
+         </p>
+    </div>
+
+    <div class="row col-md-9" style="text-align: center; width:50%; margin: 50px 50px">
+         <div class="chart-container" style="float:left; height:20vh; width:50vw; margin-bottom: 400px;">
+              <canvas id="myChart"></canvas>
+         </div>
+         <% if (show == 'number') { %>
+              <script>
+                  var randomScalingFactor = function() { return Math.round(Math.random() * 255)};
+                  var backgroundCol = [];
+                  var borderCol = [];
+                  var dataLength = <%-severity_number.length%>;
+                  for (var i = 0; i < dataLength; i++) {
+                      var red = randomScalingFactor();
+                      var green = randomScalingFactor();
+                      var blue = randomScalingFactor();
+                      backgroundCol.push('rgba('+ red + ','+ green + ',' + blue + ','+ '0.67)');
+                      borderCol.push('rgba('+ red + ','+ green + ',' + blue + ','+ '0.8)');
+                  };
+                  var horizontalBarChartData = {
+                      labels: ['S1', 'S2', 'S3', 'S4'],
+                      datasets: [{
+                          label: 'Dataset 1',
+                          backgroundColor:backgroundCol,
+                          borderColor: borderCol,
+                          borderWidth: 1,
+                          data: [<%= severity_number%>]
+                      }]
+
+                  };
+
+                  window.onload = function() {
+                      var ctx = document.getElementById('myChart').getContext('2d');
+                      window.myHorizontalBar = new Chart(ctx, {
+                          type: 'horizontalBar',
+                          data: horizontalBarChartData,
+                          options: {
+                              // Elements options apply to all of the options unless overridden in a dataset
+                              // In this case, we are setting the border of each horizontal bar to be 2px wide
+                              elements: {
+                                  rectangle: {
+                                      borderWidth: 2,
+                                  }
+                              },
+                              responsive: true,
+                              legend: {
+                                  display:false,
+                              },
+                              title: {
+                                  display: true,
+                                  text: 'The number of accidents with severity level 1, 2, 3 and 4 in state in one month in 2019'
+                              },
+                              scales: {
+                                  xAxes: [{
+                                      display: true,
+                                      scaleLabel: {
+                                          fontSize: 15,
+                                          display: true,
+                                          labelString: 'Number of Accidents'
+                                      },
+                                      ticks: {
+                                          fontSize: 12,
+                                          major: {
+                                              fontStyle: 'bold',
+                                              fontColor: 'rgba(255,0,0,0.87)'
+                                          }
+                                      }
+                                  }],
+                                  yAxes: [{
+                                      display: true,
+                                      scaleLabel: {
+                                          fontSize: 15,
+                                          display: true,
+                                          labelString: "Severity of Accidents"
+                                      },
+                                      ticks: {
+                                          fontSize: 12,
+                                          beginAtZero: true
+                                      }
+                                  }]
+                              }
+                          }
+                      });
+
+                  };
+              </script>
+         <% } else { %>
+             <script>
+                 var config = {
+                     type: 'pie',
+                     data: {
+                         datasets: [{
+                             data: [<%-pie_number%>],
+                             backgroundColor: ['rgba(255,0,0,0.6)',
+                                               'rgba(255,255,0,0.6)',
+                                               'rgba(0,0,255,0.6)',
+                                               'rgba(0,255,0,0.6)'],
+                             borderColor: ['rgba(255,0,0,0.87)',
+                                 'rgba(255,255,0,0.87)',
+                                 'rgba(0,0,255,0.87)',
+                                 'rgba(0,255,0,0.87)']
+                         }],
+                         labels: ['S1','S2','S3','S4']
+                     },
+                     options: {
+                         responsive: true,
+                         title: {
+                             display: true,
+                             text: 'The percent of each level of severity of the accidents in state in one month in 2019'
+                         }
+                     }
+                 };
+
+                 window.onload = function() {
+                     var ctx = document.getElementById('myChart').getContext('2d');
+                     window.myPie = new Chart(ctx, config);
+                 };
+             </script>
+         <% } %>
+    </div>
+</div>
+
+<%- include("../../partials/footer") %>

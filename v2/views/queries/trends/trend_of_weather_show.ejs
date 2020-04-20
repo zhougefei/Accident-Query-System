@@ -1,0 +1,85 @@
+<%- include("../../partials/header") %>
+
+<h1 style="text-align: center">The trend of accident occurrence in selected city under special weather condition with different severity level</h1>
+
+<div class="row">
+    <div class="col-md-3">
+         <p class="lead" style="text-align: center"> </p>
+         <div class="list-group">
+             <a class="list-group-item active" href="/queries/trends/accident_in_state">Trend of accident numbers in the selected state</a>
+             <a class="list-group-item" href="/queries/trends/trend_of_more_than2">Trend of occurrence of high severity more than 2 at the selected city</a>
+             <a class="list-group-item active" href="/queries/trends/trend_of_weather">The trend of accident occurrence in selected city under special weather condition with different severity level</a>
+    	 </div>
+    	 <p>
+              <a href="/queries/trends" class="btn btn-primary btn-block">Go Back</a>
+         </p>
+    </div>
+
+    <div class="container col-md-9" style="text-align: center; width: 30%; margin: 50px 50px">
+         <div class="chart-container" style="float:left; height:20vh; width:50vw; margin-bottom: 300px;">
+             <canvas id="myChart1"></canvas>
+         </div>
+         <script>
+             var months = ["Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+             var barChartData1 = {
+                 labels: months,
+                 datasets: [{
+                     label: '# of S1 Accidents',
+                     backgroundColor: 'rgb(0,255, 0,0.6)',
+                     data: [<%= S1_number %>]
+                 }, {
+                     label: '# of S2 Accidents',
+                     backgroundColor: 'rgb(0, 0, 255,0.6)',
+                     data: [<%= S2_number %>]
+
+                 }, {
+                     label: '# of S3 Accidents',
+                     backgroundColor: 'rgb(255, 99, 132,0.6)',
+                     data: [<%= S3_number %>]
+                 }, {
+                     label: '# of S4 Accidents',
+                     backgroundColor: 'rgb(255, 0, 0,0.6)',
+                     data:[<%= S4_number %>]
+                 }]
+
+             };
+             window.onload = function() {
+                 var ctx1 = document.getElementById('myChart1').getContext('2d');
+                 window.myBar = new Chart(ctx1, {
+                     type: 'bar',
+                     data: barChartData1,
+                     options: {
+                         title: {
+                             display: true,
+                             text: 'The trend of accidents with severity level 1, 2, 3, 4 happened in selected state under <%= weather %> during 2019'
+                         },
+                         tooltips: {
+                             mode: 'index',
+                             intersect: false
+                         },
+                         responsive: true,
+                         scales: {
+                             xAxes: [{
+                                 stacked: true,
+                                 scaleLabel: {
+                                     fontSize: 15,
+                                     display: true,
+                                     labelString: "Month"
+                                 }
+                             }],
+                             yAxes: [{
+                                 stacked: true,scaleLabel: {
+                                     fontSize: 15,
+                                     display: true,
+                                     labelString: "Number of Accidents"
+                                 },
+                             }]
+                         }
+                     }
+                 });
+             };
+         </script>
+    </div>
+</div>
+
+<%- include("../../partials/footer") %>

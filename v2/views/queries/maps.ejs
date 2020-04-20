@@ -1,0 +1,61 @@
+<%- include("../partials/header") %>
+
+    <h1 style="text-align: center">Accident Density in Selected City</h1>
+    <div style="width: 500px; margin: 10px auto;">
+        <form action="/queries/maps" method="post">
+            <div class="row">
+                <div class="pull-right" style="width: 250px;">
+                     <h5>Select the month you want to analyze</h5>
+                     <select name="month" style="width: 250px; height: 35px;">
+                         <option value="">-</option>
+                         <option value="3">March</option>
+                         <option value="4">April</option>
+                         <option value="5">May</option>
+                         <option value="6">June</option>
+                         <option value="7">July</option>
+                         <option value="8">August</option>
+                         <option value="9">September</option>
+                         <option value="10">October</option>
+                         <option value="11">November</option>
+                         <option value="12">December</option>
+                     </select>
+                </div>
+                <div style="width: 250px;">
+                    <h5 style="text-align: center">Input the city you want to query</h5>
+                    <input class="form-control" type="text" name="location" placeholder="location"
+                </div>
+            </div>
+			<div class="form-group" style="margin-top: 10px">
+                <button class="btn btn-lg btn-primary btn-block">Analyze</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="map"></div>
+<a href="/">Go Back</a>
+
+<script>
+  function initMap() {
+    var lat = 39.07622;
+    var lng = -103.60283;
+    var center = {lat: lat, lng: lng };
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4.1,
+        center: center,
+        scrollwheel: false
+    });
+    var infowindow = new google.maps.InfoWindow({
+       content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: center,
+        map: map
+    });
+    marker.addListener('click', function() {
+       infowindow.open(map, marker);
+    });
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDU2pbzkUblkDkiyzIAdNIphR0dvyuE6XA&callback=initMap"></script>
+
+<%- include("../partials/footer") %>

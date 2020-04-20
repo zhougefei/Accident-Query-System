@@ -1,0 +1,33 @@
+<%- include("../../partials/header") %>
+
+<h1 style="text-align: center">Trend of county with high severity more than 2 at the selected county</h1>
+
+<div class="row">
+    <div class="col-md-3">
+         <p class="lead" style="text-align: center"> </p>
+         <div class="list-group">
+             <a class="list-group-item active" href="/queries/trends/accident_in_state">Trend of accident numbers in the selected state</a>
+             <a class="list-group-item" href="/queries/trends/trend_of_more_than2">Trend of occurrence of high severity more than 2 at the selected city</a>
+             <a class="list-group-item active" href="/queries/trends/trend_of_weather">The trend of accident occurrence in selected city under special weather condition with different severity level</a>
+    	 </div>
+    	 <p>
+              <a href="/queries/trends" class="btn btn-primary btn-block">Go Back</a>
+         </p>
+    </div>
+
+    <div class="container col-md-12" style="text-align: center; width: 30%; margin: 50px 200px">
+        <form action="/queries/trends/trend_of_more_than2" method="post">
+            <div class="form-group">
+                <h4>Input the state you want to query</h4>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="location" placeholder="location">
+            </div>
+            <div class="form-group" style="text-align: center">
+                 <button class="btn btn-sm btn-primary btn-block">Analyze</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include("../../partials/footer") %>
